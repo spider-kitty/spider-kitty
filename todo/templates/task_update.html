@@ -1,23 +1,27 @@
-<!-- todo/templates/todo/task_update.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Update Task</title>
-</head>
-<body>
-    <h1>Update Task</h1>
+{% extends "base.html" %}
+
+{% block title %}Mark {{ task.title }} as Completed{% endblock %}
+
+{% block content %}
+<h2>Mark Task as Completed</h2>
+
+{% if already_completed %}
+    <div style="background-color: #d4edda; padding: 15px; border-radius: 4px; margin: 20px 0;">
+        <p style="color: #155724; margin: 0;"><strong>Completed!</strong></p>
+        <p style="color: #155724; margin: 10px 0 0 0;">This task was already marked as completed.</p>
+    </div>
+    <div class="button-row">
+        <a class="btn btn-light" href="{% url 'todo:home' %}">Back to List</a>
+    </div>
+{% else %}
+    <p>Are you sure you want to mark "{{ task.title }}" as completed?</p>
     
-    {% if already_completed %}
-        <p style="color: red;">This task is already completed and cannot be modified.</p>
-        <a href="{% url 'todo:home' %}">Back to Tasks</a>
-    {% else %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Mark as Complete</button>
-        </form>
-        <a href="{% url 'todo:home' %}">Cancel</a>
-    {% endif %}
-</body>
-</html>
+    <form method="post">
+        {% csrf_token %}
+        <div class="button-row">
+            <button class="btn btn-primary" type="submit">Yes, Mark Completed</button>
+            <a class="btn btn-light" href="{% url 'todo:task_detail' task.pk %}">Cancel</a>
+        </div>
+    </form>
+{% endif %}
+{% endblock %}
