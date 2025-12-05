@@ -1,96 +1,45 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>Control Panel</title>
-    <style>
-        body {
-            direction: rtl;
-            text-align: right;
-            font-family: 'Segoe UI', 'Vazir', sans-serif;
-            background: linear-gradient(135deg, #1c1c1c, #2c003e);
-            color: #eee;
-            margin: 0;
-            padding: 2rem;
-        }
-        h1 {
-            text-align: center;
-            font-size: 2rem;
-            color: #ff0055;
-            margin-bottom: 3rem;
-            text-shadow: 0 0 10px #ff0055;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        .card {
-            background-color: #2a0033;
-            border: 2px solid #ff0055;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 0 15px #ff0055;
-            transition: transform 0.3s ease;
-        }
-        .card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 25px #ff0055;
-        }
-        .card a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: block;
-        }
-        .card a:hover {
-            color: #ff99cc;
-        }
-            .card.blue {
-        border-color: #0099ff;
-        box-shadow: 0 0 15px #0099ff;
-        background-color: #001a33;
-    }
-    .card.blue:hover {
-        box-shadow: 0 0 25px #0099ff;
-    }
-    .card.red {
-        border-color: #ff3333;
-        box-shadow: 0 0 15px #ff3333;
-        background-color: #330000;
-    }
-    .card.red:hover {
-        box-shadow: 0 0 25px #ff3333;
-    }
-    </style>
-</head>
-<body>
-    <h1>Control Panel</h1>
-    <div class="grid">
-        {% for task in overdue_tasks %}
-            <div classcard {% cycle 'blue' 'red' %}">d">
-                            <h3 style="color: #ff99cc; margin: 0.5rem 0; text-shadow: 0 0 10px #ff99cc;">{{ task.title }}</h3>
-                <a href="{% url 'task_detail' task.id %}">🔴 {{ task.title }}</a>
-            </div>
-        {% endfor %}
-        {% for task in active_tasks %}
-            <div classcard {% cycle 'blue' 'red' %}">d">
-                            <h3 style="color: #ff99cc; margin: 0.5rem 0; text-shadow: 0 0 10px #ff99cc;">{{ task.title }}</h3>
-                <a href="{% url 'task_detail' task.id %}">🟣 {{ task.title }}</a>
-            </div>
-        {% endfor %}
-        {% for task in completed_tasks %}
-            <div classcard {% cycle 'blue' 'red' %}">d">
-                            <h3 style="color: #ff99cc; margin: 0.5rem 0; text-shadow: 0 0 10px #ff99cc;">{{ task.title }}</h3>
-                <a href="{% url 'task_detail' task.id %}">⚫ {{ task.title }}</a>
-            </div>
-        {% endfor %}
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
 
-<body style="direction: rtl; text-align: right;">
+{% block title %}Task List{% endblock %}
 
+{% block content %}
+<h1>Tasks</h1>
 
+<ul class="task-list">
+    {% for task in overdue_tasks %}
+        <li class="task-item {% cycle 'blue-card' 'red-card' %}">
+            <h3>
+                <a href="{% url 'todo:task_detail' task.pk %}">{{ task.title }}</a>
+            </h3>
+            <p>Due: {{ task.due_date }} {{ task.due_time }}</p>
+            <p>Status: Overdue</p>
+        </li>
+    {% endfor %}
+    {% for task in active_tasks %}
+        <li class="task-item {% cycle 'blue-card' 'red-card' %}">
+            <h3>
+                <a href="{% url 'todo:task_detail' task.pk %}">{{ task.title }}</a>
+            </h3>
+            <p>Due: {{ task.due_date }} {{ task.due_time }}</p>
+            <p>Status: Ongoing</p>
+        </li>
+    {% endfor %}
+    {% for task in completed_tasks %}
+        <li class="task-item {% cycle 'blue-card' 'red-card' %}">
+            <h3>
+                <a href="{% url 'todo:task_detail' task.pk %}">{{ task.title }}</a>
+            </h3>
+            <p>Due: {{ task.due_date }} {{ task.due_time }}</p>
+            <p>Status: Completed</p>
+        </li>
+    {% empty %}
+        <li class="empty-state">
+            <p>No tasks yet. Create your first task to get started!</p>
+        </li>
+    {% endfor %}
+</ul>
 
+<div class="button-row">
+    <a class="btn btn-primary" href="{% url 'todo:task_create' %}">Create New Task</a>
+</div>
+{% endblock %}
