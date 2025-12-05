@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, CreateView, DeleteView, ListView
+from django.views.generic import DetailView, CreateView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
 from django.utils import timezone
 
@@ -48,4 +48,20 @@ class TaskDeleteView(DeleteView):
     model = Task
     template_name = 'task_delete.html'  # Changed from 'todo/task_delete.html'
     success_url = reverse_lazy('todo:home')
+
     context_object_name = 'task'
+
+    
+class TaskUpdateView(UpdateView):
+    model = Task
+    fields = ['done']
+    template_name = 'task_update.html'  # Changed from 'todo/task_update.html'
+    success_url = reverse_lazy('todo:home')
+    context_object_name = 'task'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Only show the form if task is not done
+        if self.object.done:
+            context['already_completed'] = True
+        return context
