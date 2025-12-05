@@ -1,17 +1,18 @@
-<!-- todo/templates/todo/task_delete.html -->
-<!doctype html>
-<html>
-<head><meta charset="utf-8"><title>Delete Task</title></head>
-<body>
-  <h1>حذف تسک</h1>
+{% extends "base.html" %}
 
-  <p>آیا مطمئن هستید می‌خواهید این تسک را حذف کنید؟</p>
-  <p><strong>{{ task.title }}</strong></p>
+{% block title %}Delete {{ task.title }}{% endblock %}
 
-  <form method="post">
+{% block content %}
+<h2>Delete Task</h2>
+
+<p>Are you sure you want to permanently delete "{{ task.title }}"?</p>
+<p>This action cannot be undone.</p>
+
+<form method="post">
     {% csrf_token %}
-    <button type="submit">حذف</button>
-    <a href="{% url 'todo:home' %}">انصراف</a>
-  </form>
-</body>
-</html>
+    <div class="button-row">
+        <button class="btn btn-danger" type="submit">Yes, Delete Task</button>
+        <a class="btn btn-light" href="{% url 'todo:task_detail' task.pk %}">Cancel</a>
+    </div>
+</form>
+{% endblock %}
