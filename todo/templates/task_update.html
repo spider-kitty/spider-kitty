@@ -1,0 +1,23 @@
+<!-- todo/templates/todo/task_update.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Update Task</title>
+</head>
+<body>
+    <h1>Update Task</h1>
+    
+    {% if already_completed %}
+        <p style="color: red;">This task is already completed and cannot be modified.</p>
+        <a href="{% url 'todo:home' %}">Back to Tasks</a>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Mark as Complete</button>
+        </form>
+        <a href="{% url 'todo:home' %}">Cancel</a>
+    {% endif %}
+</body>
+</html>
