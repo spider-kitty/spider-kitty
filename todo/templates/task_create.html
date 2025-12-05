@@ -1,16 +1,16 @@
-<!-- todo/templates/todo/task_create.html -->
-<!doctype html>
-<html>
-<head><meta charset="utf-8"><title>Create Task</title></head>
-<body>
-  <h1>ایجاد تسک جدید</h1>
+{% extends "base.html" %}
 
-  <form method="post">
+{% block title %}Create Task{% endblock %}
+
+{% block content %}
+<h2>Create New Task</h2>
+
+<form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">ثبت</button>
-  </form>
-
-  <a href="{% url 'todo:home' %}">بازگشت</a>
-</body>
-</html>
+    <div class="button-row">
+        <button class="btn btn-primary" type="submit">Save Task</button>
+        <a class="btn btn-light" href="{% url 'todo:home' %}">Cancel</a>
+    </div>
+</form>
+{% endblock %}
