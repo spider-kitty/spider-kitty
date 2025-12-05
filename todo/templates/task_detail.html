@@ -76,6 +76,9 @@
         <div class="meta">🔐 Access Code: {{ task.title|slice:":8" }}-{{ task.id }}</div>
 
         <a class="back" href="{% url 'home' %}">← Return to Grid</a>
+        <a class="back" href="{% url 'todo:task_update' task.id %}">✏️ Edit Task</a>
+    <a class="back" href="{% url 'todo:task_delete' task.id %}" style="margin-right: 1rem; color: #ff3333;">🗑️ Delete Task</a>
     </div>
 </body>
 </html>
+
