@@ -3,7 +3,7 @@
 - 🌱 I’m currently learning golang 
 - 💞️ I’m looking to collaborate on nothing realy 
 - 📫 nothing
-- 😄 Pronouns: 20
+- 😄 Pronouns: 19
 - ⚡ Fun fact: my engish is hella bad 
 
 <!---
