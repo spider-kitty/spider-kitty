@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Node</title>
+    <style>
+        body {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', 'Vazir', sans-serif;
+            background: radial-gradient(circle at center, #1a001f, #000000);
+            color: #e0e0e0;
+            padding: 2rem;
+        }
+        .panel {
+            max-width: 600px;
+            margin: auto;
+            background-color: #2a0033;
+            border: 2px solid #ff0055;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 0 25px #ff0055;
+        }
+        .header {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #ff99cc;
+            text-shadow: 0 0 10px #ff99cc;
+        }
+        .meta {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background-color: #1c001f;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px #660066;
+        }
+        .meta.red {
+            color: #ff3333;
+            box-shadow: inset 0 0 10px #ff3333;
+        }
+        .meta.green {
+            color: #00ff99;
+            box-shadow: inset 0 0 10px #00ff99;
+        }
+        .meta.yellow {
+            color: #ffcc00;
+            box-shadow: inset 0 0 10px #ffcc00;
+        }
+        .back {
+            display: inline-block;
+            margin-top: 2rem;
+            text-decoration: none;
+            color: #ff99cc;
+            font-weight: bold;
+        }
+        .back:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="header">🧩 Node ID: {{ task.id }}</div>
+
+        {% now "Y-m-d" as today %}
+        {% if task.due_date|stringformat:"s" < today and not task.done %}
+            <div class="meta red">🕒 {{ task.due_date }} | ⚠️ Status: Delayed</div>
+        {% elif task.done %}
+            <div class="meta green">🕒 {{ task.due_date }} | ✅ Status: Executed</div>
+        {% else %}
+            <div class="meta yellow">🕒 {{ task.due_date }} | ⏳ Status: Pending</div>
+        {% endif %}
+
+        <div class="meta">⏰ {{ task.due_time }}</div>
+        <div class="meta">🔐 Access Code: {{ task.title|slice:":8" }}-{{ task.id }}</div>
+
+        <a class="back" href="{% url 'home' %}">← Return to Grid</a>
+    </div>
+</body>
+</html>

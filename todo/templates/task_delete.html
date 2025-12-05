@@ -1,0 +1,17 @@
+<!-- todo/templates/todo/task_delete.html -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Delete Task</title></head>
+<body>
+  <h1>حذف تسک</h1>
+
+  <p>آیا مطمئن هستید می‌خواهید این تسک را حذف کنید؟</p>
+  <p><strong>{{ task.title }}</strong></p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">حذف</button>
+    <a href="{% url 'todo:home' %}">انصراف</a>
+  </form>
+</body>
+</html>

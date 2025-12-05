@@ -1,0 +1,16 @@
+<!-- todo/templates/todo/task_create.html -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Create Task</title></head>
+<body>
+  <h1>ایجاد تسک جدید</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ثبت</button>
+  </form>
+
+  <a href="{% url 'todo:home' %}">بازگشت</a>
+</body>
+</html>
